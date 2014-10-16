@@ -6,7 +6,7 @@
   $connection = mysql_connect($db_host,$db_username,$db_password);
   mysql_select_db($db_schema);
 
-  $query = "SELECT lat,lng,predio FROM trip WHERE ";
+  $query = "SELECT lat,lng,predio FROM routes WHERE ";
   
   $query.= "1=1";
 
