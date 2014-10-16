@@ -11,6 +11,8 @@
   $query.= "1=1";
 
   $result = mysql_query($query,$connection);
+
+  echo $result;
 ?>
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <position>

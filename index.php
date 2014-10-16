@@ -3,7 +3,7 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>Trip Quality</title>
+  <title>Rutas</title>
   <link rel="stylesheet" type="text/css" href="screen.css" media="all">
   <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=visualization"></script>
   <script src="jquery.js"></script>
@@ -16,7 +16,7 @@
   </div>
 
   <div id="panel">
-    <h1>Trip Quality</h1>
+    <h1>Rutas</h1>
  
       <p align="center">
         El numero de anomalias es:
@@ -41,14 +41,6 @@
       $.post('output.php',
         {
           tripnoise: 'true',
-          dates: params['dates'],
-          start: params['start'],
-          end: params['end'],
-          noise: params['noise'],
-          min: params['min'],
-          max: params['max'],
-          user: params['user'],
-          users: params['users']
         },
         function(xml){
             $('#msg_number').html($(xml).find('Info').length);
@@ -64,55 +56,7 @@
                   $(this).attr('lng')
                 );
 
-                valor = parseFloat($(this).attr('weight'));
-
-                // verde 00ff00
-                // azul 0000FF
-                // rojo ff0000
-                //1.5-2 2-3  3-4  4-4.5  5
-
-                if (valor < 2) {
-                  var circle = new google.maps.Circle({
-                    center:latlng,
-                    radius:4,
-                    strokeColor:"#0000FF", //blue
-                    strokeOpacity:1,
-                    strokeWeight:2,
-                    fillColor:"#0000FF",
-                    fillOpacity:0.1
-                  });
-                } else if (valor < 3){
-                  var circle = new google.maps.Circle({
-                    center:latlng,
-                    radius:6,
-                    strokeColor:"#00ff00",  //green
-                    strokeOpacity:1,
-                    strokeWeight:2,
-                    fillColor:"#00ff00",
-                    fillOpacity:0.4
-                  });
-                }else if (valor < 4){
-                  var circle = new google.maps.Circle({
-                    center:latlng,
-                    radius:8,
-                    strokeColor:"#FF6600", //orange
-                    strokeOpacity:1,
-                    strokeWeight:2,
-                    fillColor:"#FF6600",
-                    fillOpacity:0.4
-                  });
-                }else if (valor < 4.5){
-                  var circle = new google.maps.Circle({
-                    center:latlng,
-                    radius:9,
-                    strokeColor:"##FF6600", //red
-                    strokeOpacity:1,
-                    strokeWeight:2,
-                    fillColor:"##FF6600",
-                    fillOpacity:0.8
-                  });
-                }else {
-                  var circle = new google.maps.Circle({
+             var circle = new google.maps.Circle({
                     center:latlng,
                     radius:10,
                     strokeColor:"#ff0000",
@@ -121,19 +65,18 @@
                     fillColor:"#ff0000",
                     fillOpacity:1
                   });
-                }
 
                 circle.setMap(map);
                 circles.push(circle);
 
-                if (valor >= 0){
+    
                   var marker = new google.maps.Marker({
                     position: latlng,
                     map: map,
                     title: $(this).attr('weight')
                   });
                   markers.push(marker);
-                }
+
 
 
              });//$(xml).find('Info').each(
@@ -216,7 +159,6 @@
       });
     });
 
-    $('#users').load('users.php?tripnoise=true');
 
 </script>
 
