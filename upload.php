@@ -29,8 +29,8 @@
 					$c=0;
 					while( $data = fgetcsv($file,1000,",")){
 						$c=$c+1;
-                        $predio = $data[1];
-						$values.= "(". $data[0] . "," . "$predio" . "," . $data[2] . "," . $data[3]  . "," . $data[4]  . ",'$fecha_carga'" . "),";
+                        $predio = "'".$data[1]."'";
+						$values.= "(". $data[0] . "," . "$predio" . "," . $data[2] . "," . $data[3]  . "," . $data[4]  . ",'$fecha_carga'" . "," ."GeomFromText('POINT(".$data[2]." ".$data[3].")')" ."),";
 					}
 
 					fclose($file);
@@ -41,7 +41,7 @@
 
 					$values = substr($values,0,-1);
 
-					$query = "INSERT INTO routes (timestamp,predio,lat,lng,alt,fecha_carga) VALUES $values";
+					$query = "INSERT INTO routes (timestamp,predio,lat,lng,alt,fecha_carga,coord) VALUES $values";
 
 					fwrite($log,"<<".$query.">>\r\n");
 
