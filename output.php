@@ -12,7 +12,6 @@
 
   $result = mysql_query($query,$connection);
 
-  echo $result;
 ?>
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <position>
@@ -20,7 +19,7 @@
   echo $query;
   while( $row = mysql_fetch_array($result) ){
 ?>
-<Info lat="<?php echo $row['lat']; ?>" lng="<?php echo $row['lng']; ?>" weight="<?php echo $row['predio']; ?>"/>
+<Info lat="<?php echo $row['lat']; ?>" lng="<?php echo $row['lng']; ?>"/>
 <?php
 
   }

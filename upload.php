@@ -10,6 +10,8 @@
 	<?php
 			$log = fopen("log.txt","a+");
 
+			fwrite($log,date("Y-m-d H:i:s")." Hola\r\n");
+
 			if( is_uploaded_file($_FILES['uploaded_file']['tmp_name']) ){
 
 				$uploaded_file = 'uploads/'.date("U").'-l.txt';
@@ -18,7 +20,7 @@
 					$connection = mysql_connect($db_host,$db_username,$db_password);
 					mysql_select_db($db_schema);
 
-					$user_id = 1;
+					
 					$fecha_carga = date("Y-m-d");
 					$values = "";
 
@@ -27,19 +29,26 @@
 					$c=0;
 					while( $data = fgetcsv($file,1000,",")){
 						$c=$c+1;
-
-						$values.= "(". $data[0] . "," . $data[1] . "," . $data[2] . "," . $data[3]  . ",'$fecha_carga'," . "predio),";
+                        $predio = $data[1];
+						$values.= "(". $data[0] . "," . "$predio" . "," . $data[2] . "," . $data[3]  . "," . $data[4]  . ",'$fecha_carga'" . "),";
 					}
 
 					fclose($file);
 
 					fwrite($log,date("Y-m-d H:i:s")."- Se cargaron $c registros de location\r\n");
 
-					fclose($log);
+
 
 					$values = substr($values,0,-1);
 
-					$query = "INSERT INTO routes (timestamp,lat,lng,alt,fecha_carga,predio) VALUES $values";
+					$query = "INSERT INTO routes (timestamp,predio,lat,lng,alt,fecha_carga) VALUES $values";
+
+					fwrite($log,"<<".$query.">>\r\n");
+
+
+					fclose($log);
+                    
+
 					$result = mysql_query($query,$connection);
 
 					if( $result ) echo '=)';
@@ -48,6 +57,8 @@
 
 				}
 
+			} else {
+				fclose($log);
 			}
 
 	?>
